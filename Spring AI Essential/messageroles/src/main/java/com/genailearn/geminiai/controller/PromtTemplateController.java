@@ -22,14 +22,27 @@ public class PromtTemplateController {
 	@Value("classpath:/promptTemplets/userPromtTemplate")
 	Resource promtTemplate;
 
+	@Value("classpath:/promptTemplets/systemPromtTemplate")
+	Resource systemTemplate;
+
 	@GetMapping("/email")
 	public String promtTemplateForEmail(@RequestParam("customerName") String customerName,
 			@RequestParam("customerMessage") String customerMessage) {
-		return chatClient
-				.prompt().system(promtTemplate).user(promtTemplateSpec -> promtTemplateSpec
-						.param("customerName", customerName)
+		return chatClient.prompt()
+				.system("""
+						You are an empathetic, professional, and knowledgeable Human Resources (HR) Assistant.
+						Your primary role is to assist employees with questions regarding company policies, benefits, payroll, leave management, and onboarding processes.
+						Always maintain a polite, neutral, and supportive tone.
+						Do not provide legal advice. If a query requires human intervention or involves sensitive employee relations, politely direct the employee to contact the HR department.
+						""")
+				.user(promtTemplateSpec -> promtTemplateSpec.text(promtTemplate).param("customerName", customerName)
 						.param("customerMessage", customerMessage))
 				.call().content();
+	}
+
+	@GetMapping("/chat/loginissue")
+	public String promtTemplateForLoginIssue(@RequestParam("message") String message) {
+		return chatClient.prompt().system(systemTemplate).user(message).call().content();
 	}
 
 }
