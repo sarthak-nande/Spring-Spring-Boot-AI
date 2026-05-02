@@ -12,8 +12,8 @@ public class ChatController {
 	
 	private final ChatClient chatClient;
 	
-	public ChatController(ChatClient.Builder chatClient) {
-		this.chatClient = chatClient.build();
+	public ChatController(ChatClient chatClient) {
+		this.chatClient = chatClient;
 	}
 	
 	@GetMapping("/chat")
