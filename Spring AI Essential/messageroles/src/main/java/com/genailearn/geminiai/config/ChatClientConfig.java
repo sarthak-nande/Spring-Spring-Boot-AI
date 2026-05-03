@@ -1,11 +1,10 @@
 package com.genailearn.geminiai.config;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.google.genai.GoogleGenAiChatModel.ChatModel;
-import org.springframework.ai.google.genai.GoogleGenAiChatOptions;
+import org.springframework.ai.ollama.api.OllamaChatOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import com.genailearn.geminiai.adviosrs.TokenUsageAuditAdvioser;
 
@@ -13,13 +12,14 @@ import com.genailearn.geminiai.adviosrs.TokenUsageAuditAdvioser;
 public class ChatClientConfig {
 
 	@Bean
+	@Primary
 	public ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
 		
 		//You Can Also Use To Handel Chat Options
-		ChatOptions chatOptions = ChatOptions.builder().model("").maxTokens(100).temperature(45.0).build();
+		//ChatOptions chatOptions = ChatOptions.builder().model("").maxTokens(100).temperature(45.0).build();
 		
 		return chatClientBuilder
-				.defaultOptions(GoogleGenAiChatOptions.builder().model(ChatModel.GEMINI_1_5_FLASH).build())
+				.defaultOptions(OllamaChatOptions.builder().model("llama3").build())
 				.defaultAdvisors(new TokenUsageAuditAdvioser())
 				.defaultSystem(
 						"""

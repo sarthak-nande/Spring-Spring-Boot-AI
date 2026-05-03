@@ -1,13 +1,13 @@
 package com.genailearn.geminiai.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.api.client.util.Value;
 
 @RestController
 @RequestMapping("/api")
@@ -22,8 +22,8 @@ public class PromtTemplateController {
 	@Value("classpath:/promptTemplets/userPromtTemplate")
 	Resource promtTemplate;
 
-	@Value("classpath:/promptTemplets/systemPromtTemplate")
-	Resource systemTemplate;
+	@Value("classpath:/promptTemplets/systemPromtTemplate.st")
+	Resource systemPromtTemplate;
 
 	@GetMapping("/email")
 	public String promtTemplateForEmail(@RequestParam("customerName") String customerName,
@@ -42,7 +42,7 @@ public class PromtTemplateController {
 
 	@GetMapping("/chat/loginissue")
 	public String promtTemplateForLoginIssue(@RequestParam("message") String message) {
-		return chatClient.prompt().system(systemTemplate).user(message).call().content();
+		return chatClient.prompt().system(systemPromtTemplate).user(message).call().content();
 	}
 
 }
