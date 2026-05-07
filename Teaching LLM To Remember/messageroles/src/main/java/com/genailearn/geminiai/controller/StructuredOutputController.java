@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.genailearn.geminiai.model.OutputResponseRecord;
 
+
 @RestController
 @RequestMapping("/api")
 public class StructuredOutputController {
