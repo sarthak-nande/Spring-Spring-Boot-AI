@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "chathistory")
-public class ChatMemory {
+public class ChatHistory {
 
 	@Id
 	String id;
@@ -19,11 +19,11 @@ public class ChatMemory {
 	
 	LocalDateTime timestamp;
 	
-	public ChatMemory() {
+	public ChatHistory() {
 		
 	}
 
-	public ChatMemory(String conversationId, String content, String messageType, LocalDateTime timestamp) {
+	public ChatHistory(String conversationId, String content, String messageType, LocalDateTime timestamp) {
 		super();
 		this.conversationId = conversationId;
 		this.content = content;
