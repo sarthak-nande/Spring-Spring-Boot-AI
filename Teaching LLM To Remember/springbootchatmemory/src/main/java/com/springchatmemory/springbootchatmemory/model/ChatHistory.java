@@ -1,0 +1,66 @@
+package com.springchatmemory.springbootchatmemory.model;
+
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "chathistory")
+public class ChatMemory {
+
+	@Id
+	String id;
+	
+	String conversationId;
+	
+	String content;
+	
+	String messageType;
+	
+	LocalDateTime timestamp;
+	
+	public ChatMemory() {
+		
+	}
+
+	public ChatMemory(String conversationId, String content, String messageType, LocalDateTime timestamp) {
+		super();
+		this.conversationId = conversationId;
+		this.content = content;
+		this.messageType = messageType;
+		this.timestamp = timestamp;
+	}
+
+	public String getConversationId() {
+		return conversationId;
+	}
+
+	public void setConversationId(String conversationId) {
+		this.conversationId = conversationId;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+}
