@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.springchatmemory.springbootchatmemory.model.ChatHistory;
 import com.springchatmemory.springbootchatmemory.repository.ChatHistoryRepository;
 
-@Configuration
+@Service
 public class ChatMemoryConfig implements ChatMemory{
 	
 	private final ChatHistoryRepository chatHistoryRepository;
