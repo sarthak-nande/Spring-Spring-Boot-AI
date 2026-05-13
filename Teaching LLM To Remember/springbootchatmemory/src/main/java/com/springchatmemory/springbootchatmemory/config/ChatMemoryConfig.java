@@ -2,16 +2,22 @@ package com.springchatmemory.springbootchatmemory.config;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.SystemMessage;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import com.springchatmemory.springbootchatmemory.model.ChatHistory;
 import com.springchatmemory.springbootchatmemory.repository.ChatHistoryRepository;
 
-@Configuration
+@Service
 public class ChatMemoryConfig implements ChatMemory{
 	
 	private final ChatHistoryRepository chatHistoryRepository;
@@ -38,13 +44,18 @@ public class ChatMemoryConfig implements ChatMemory{
 
 	@Override
 	public List<Message> get(String conversationId) {
-		// TODO Auto-generated method stub
-		return null;
+		return chatHistoryRepository
+				.findTopNByConversationIdOrderByTimestampDesc(conversationId, PageRequest.of(0, 10))
+				.stream()
+				.map(doc -> "USER".equals(doc.getMessageType()) 
+						? new UserMessage(doc.getContent())
+						: new SystemMessage(doc.getContent()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public void clear(String conversationId) {
-		// TODO Auto-generated method stub
+	     chatHistoryRepository.deleteByConversationId(conversationId);
 		
 	}
 
