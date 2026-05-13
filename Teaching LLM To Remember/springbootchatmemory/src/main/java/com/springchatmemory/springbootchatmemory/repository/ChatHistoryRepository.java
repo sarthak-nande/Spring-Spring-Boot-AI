@@ -8,12 +8,10 @@ import org.springframework.data.domain.Pageable;
 import com.springchatmemory.springbootchatmemory.model.ChatHistory;
 
 @Repository
-public interface ChatHistoryRepository extends MongoRepository<String, ChatHistory>{
+public interface ChatHistoryRepository extends MongoRepository<ChatHistory, String>{
 
 	List<ChatHistory> findTopNByConversationIdOrderByTimestampDesc(String conversationId, Pageable pageable);
     
     void deleteByConversationId(String conversationId);
     
-    void save(ChatHistory chatHistory);
-	
 }

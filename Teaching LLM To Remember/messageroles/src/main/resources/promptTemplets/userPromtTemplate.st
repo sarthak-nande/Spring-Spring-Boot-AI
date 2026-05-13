@@ -1,1 +1,0 @@
-Draft an email to the hiring manager formally accepting the Programmer Analyst Trainee offer. Confirm that I am excited to start in August and ask if there is any onboarding documentation I need to review beforehand.

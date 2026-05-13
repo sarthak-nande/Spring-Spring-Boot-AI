@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.springchatmemory.springbootchatmemory.model.ChatHistory;
 import com.springchatmemory.springbootchatmemory.repository.ChatHistoryRepository;
 
-@Service
+@Configuration
 public class ChatMemoryConfig implements ChatMemory{
 	
 	private final ChatHistoryRepository chatHistoryRepository;
@@ -32,8 +32,8 @@ public class ChatMemoryConfig implements ChatMemory{
 		for(Message message: messages) {
 			ChatHistory chatHistory = new ChatHistory(
 					conversationId,
-					message.getMessageType().name(),
 					message.getText(),
+					message.getMessageType().name(),
 					LocalDateTime.now()
 			);
 			
