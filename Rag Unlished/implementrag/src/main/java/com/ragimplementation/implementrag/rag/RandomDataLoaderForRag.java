@@ -10,6 +10,8 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+
 
 @Component
 public class RandomDataLoaderForRag {
@@ -21,6 +23,7 @@ public class RandomDataLoaderForRag {
 		this.vectorStore = vectorStore;
 	}
 	
+	@PostConstruct
 	public void loadTheListOfdataIntoVectorStore() {
 		List<String> data = new ArrayList<>();
 
