@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
+import org.springframework.ai.transformer.splitter.TextSplitter;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +31,8 @@ public class DocDataLoaderIntoVectorDB {
 	public void loadPDFData() {
 		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(hrPolicyPDF);
 		List<Document> data = tikaDocumentReader.get();
-		vectorStore.add(data);
+		TextSplitter textSplitter = TokenTextSplitter.builder().withChunkSize(100).withMaxNumChunks(400).build();
+		vectorStore.add(textSplitter.split(data));
 	}
 	
 }
