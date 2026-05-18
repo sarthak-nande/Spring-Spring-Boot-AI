@@ -1,6 +1,7 @@
 package com.ragimplementation.implementrag.controller;
 
-import java.lang.annotation.Documented;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
 @RestController
@@ -32,24 +34,40 @@ public class RagChatController {
 	}
 	
 	@Value("classpath:/promtTemplate/systemPromtTemplate.st")
-	Resource systemPromtTemplate;
+	Resource systemPromptTemplate;
+	
+	@Value("classpath:/promtTemplate/hrPromtTemplate.st")
+	Resource hrPromptTemplate;
 	
 	@GetMapping("/chat")
 	public String chat(@RequestParam String message, @RequestHeader String username) {
-		SearchRequest searchRequest = SearchRequest.builder().query(message).topK(3).build();
+		SearchRequest searchRequest = SearchRequest.builder().query(message).build();
 		
 		List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
 		
-		String similarContext = similarDocs.stream()
-				.map(Document::getText)
-				.collect(Collectors.joining(System.lineSeparator()));
+		String similarContext = similarDocs.stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
 		
 		return chatClient
 				.prompt()
-				.system(systemSpec -> systemSpec.text(systemPromtTemplate).param("documents", similarContext))
+				.system(systemSpec -> systemSpec.text(systemPromptTemplate).param("documents", similarContext))
 				.advisors(t-> t.param(CONVERSATION_ID, username))
 				.user(message)
 				.call().content();
 	}
 	
+	@GetMapping("/chat/pdf")
+	public String chatWithPdf(@RequestParam String message, @RequestHeader String username) {
+		SearchRequest searchRequest = SearchRequest.builder().query(message).build();
+		
+		List<Document> similarDocs = vectorStore.similaritySearch(searchRequest);
+		
+		String similarContext = similarDocs.stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
+		
+		return chatClient
+				.prompt()
+				.system(systemSpec -> systemSpec.text(hrPromptTemplate).param("documents", similarContext))
+				.advisors(t-> t.param(CONVERSATION_ID, username))
+				.user(message)
+				.call().content();
+	}
 }

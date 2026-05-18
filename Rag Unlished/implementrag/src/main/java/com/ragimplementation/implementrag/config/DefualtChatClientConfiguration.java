@@ -21,7 +21,7 @@ public class DefualtChatClientConfiguration {
 		Advisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(storingDataIntoMongoDB).build();
 		
 		return chaBuilder
-				.defaultOptions(OllamaChatOptions.builder().model("llama3:latest").build())
+				//.defaultOptions(OllamaChatOptions.builder().model("llama3:latest").build())
 				.defaultAdvisors(chatMemoryAdvisor)
 				.build();
 	}
