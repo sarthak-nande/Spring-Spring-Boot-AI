@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.springmcp.learnmcp.tools.TimeTool;
+
 @Configuration
 public class DefaultChatClientConfiguration {
 	
@@ -18,9 +20,10 @@ public class DefaultChatClientConfiguration {
 	}
 	
 	@Bean
-	public ChatClient chatClient(ChatClient.Builder chatClient, ChatMemory chatMemory) {
+	public ChatClient chatClient(ChatClient.Builder chatClient, ChatMemory chatMemory, TimeTool timeTool) {
 		MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemoeryConfig).build();
 		return chatClient
+				.defaultTools(timeTool)
 				.defaultAdvisors(messageChatMemoryAdvisor)
 				.build();
 	}
