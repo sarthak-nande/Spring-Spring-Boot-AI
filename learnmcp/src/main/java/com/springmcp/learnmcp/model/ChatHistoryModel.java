@@ -9,7 +9,7 @@ public class ChatHistoryModel {
 	@Id
 	String id;
 	
-	String coversationId;
+	String conversationId;
 	
 	String content;
 	
@@ -21,20 +21,20 @@ public class ChatHistoryModel {
 		
 	}
 
-	public ChatHistoryModel(String coversationId, String content, String messageType, LocalDateTime timestamp) {
+	public ChatHistoryModel(String conversationId, String content, String messageType, LocalDateTime timestamp) {
 		super();
-		this.coversationId = coversationId;
+		this.conversationId = conversationId;
 		this.content = content;
 		this.messageType = messageType;
 		this.timestamp = timestamp;
 	}
 
 	public String getCoversationId() {
-		return coversationId;
+		return conversationId;
 	}
 
-	public void setCoversationId(String coversationId) {
-		this.coversationId = coversationId;
+	public void setCoversationId(String conversationId) {
+		this.conversationId = conversationId;
 	}
 
 	public String getContent() {
