@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import com.google.api.client.util.Value;
+import org.springframework.beans.factory.annotation.Value;
+
+import com.springmcp.learnmcp.tools.HelpDeskTicketTool;
 import com.springmcp.learnmcp.tools.TimeTool;
 
 @Configuration
@@ -25,11 +27,11 @@ public class DefaultChatClientConfiguration {
 	}
 	
 	@Bean
-	public ChatClient chatClient(ChatClient.Builder chatClient, ChatMemory chatMemory, TimeTool timeTool) {
+	public ChatClient chatClient(ChatClient.Builder chatClient, ChatMemory chatMemory, TimeTool timeTool, HelpDeskTicketTool helpDeskTicketTool) {
 		MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemoeryConfig).build();
 		return chatClient
 				.defaultSystem(systemPromtTemplate)
-				.defaultTools(timeTool)
+				.defaultTools(timeTool,helpDeskTicketTool)
 				.defaultAdvisors(messageChatMemoryAdvisor)
 				.build();
 	}

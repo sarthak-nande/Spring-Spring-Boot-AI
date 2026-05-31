@@ -8,7 +8,7 @@ import com.springmcp.learnmcp.entity.ChatHistoryModel;
 
 public interface ChatHistoryRepository extends MongoRepository<ChatHistoryModel, String>{
 
-	List<ChatHistoryModel> findTopNByConversationIdOrderByTimestampAsc(String conversationId, Pageable pageable);
+	List<ChatHistoryModel> findTop10ByConversationIdOrderByTimestampAsc(String conversationId);
     
     void deleteByConversationId(String conversationId);
 }
