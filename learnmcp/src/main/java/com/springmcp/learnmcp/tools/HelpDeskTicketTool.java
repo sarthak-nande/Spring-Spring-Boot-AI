@@ -26,14 +26,16 @@ public class HelpDeskTicketTool {
 	@Tool(name="createHelpDeskTicket" , description = "This tool will create the help desk support ticket using provided info such as issue and username")
 	public String createTicket(@ToolParam(description = "this is required info to create ticket") ToolContext toolContext, String issue) {
 		String username = toolContext.getContext().get("username").toString();
+		logger.info("User ticket rquest processding.....");
 		HelpDeskTicket helpDeskTicket = helpDeskTicketService.createHelpDeshTicket(issue, username);
-		
+		logger.info("User ticket is created......");
 		return "Ticket created with id #" + helpDeskTicket.getId() + " for user " + helpDeskTicket.getUsername();
 	}
 	
 	@Tool(name = "getTicketsByUsername" , description = "This tool will used to get all help desk tickets created by current user")
 	public List<HelpDeskTicket> getTicketsByUsername(ToolContext toolContext){
 		String username = (String) toolContext.getContext().get("username");
+		logger.info("Fetching user tickets.....");
 		return helpDeskTicketService.getTicketsByUsername(username);
 	}
 }
