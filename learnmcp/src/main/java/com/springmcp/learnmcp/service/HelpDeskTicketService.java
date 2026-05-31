@@ -19,14 +19,15 @@ public class HelpDeskTicketService {
 		this.helpDeskTicketRepository = helpDeskTicketRepository;
 	}
 	
-	public void createHelpDeshTicket(String ticketIssue, String username) {
-		
+	public HelpDeskTicket createHelpDeshTicket(String ticketIssue, String username) {
 		HelpDeskTicket ticket = new HelpDeskTicket(
-				username,ticketIssue,"OPEN",LocalDateTime.now(),LocalDateTime.now().plusDays(70)
+				username,
+				ticketIssue,
+				"OPEN",
+				LocalDateTime.now(),
+				LocalDateTime.now().plusDays(70)
 		);
-		
-		helpDeskTicketRepository.save(ticket);
-				
+		return helpDeskTicketRepository.save(ticket);		
 	}
 	
 	public List<HelpDeskTicket> getTicketsByUsername(String username){

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class ChatController {
@@ -25,6 +27,7 @@ public class ChatController {
 	public String chat(@RequestParam String message, @RequestHeader String username) {
 		return chatClient
 				.prompt()
+				.toolContext(Map.of("username", username))
 				.advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, username))
 				.user(message)
 				.call()

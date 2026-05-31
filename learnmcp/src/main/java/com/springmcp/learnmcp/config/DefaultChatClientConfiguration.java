@@ -6,13 +6,18 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 
+import com.google.api.client.util.Value;
 import com.springmcp.learnmcp.tools.TimeTool;
 
 @Configuration
 public class DefaultChatClientConfiguration {
 	
 	private final ChatMemoeryConfig chatMemoeryConfig;
+	
+	@Value("classpath:/promptTemplate/helpDeskPromptTemplate.st")
+	Resource systemPromtTemplate;
 	
 	@Autowired
 	public DefaultChatClientConfiguration(ChatMemoeryConfig chatMemoeryConfig) {
@@ -23,6 +28,7 @@ public class DefaultChatClientConfiguration {
 	public ChatClient chatClient(ChatClient.Builder chatClient, ChatMemory chatMemory, TimeTool timeTool) {
 		MessageChatMemoryAdvisor messageChatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemoeryConfig).build();
 		return chatClient
+				.defaultSystem(systemPromtTemplate)
 				.defaultTools(timeTool)
 				.defaultAdvisors(messageChatMemoryAdvisor)
 				.build();

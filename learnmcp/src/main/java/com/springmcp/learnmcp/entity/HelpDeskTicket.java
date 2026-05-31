@@ -73,5 +73,13 @@ public class HelpDeskTicket {
 	public void setEta(LocalDateTime eta) {
 		this.eta = eta;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 }
