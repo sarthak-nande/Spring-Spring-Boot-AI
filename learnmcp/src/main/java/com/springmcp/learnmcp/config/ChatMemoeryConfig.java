@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.springmcp.learnmcp.model.ChatHistoryModel;
+import com.springmcp.learnmcp.entity.ChatHistoryModel;
 import com.springmcp.learnmcp.repository.ChatHistoryRepository;
 
 @Service
