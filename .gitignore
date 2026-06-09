@@ -50,6 +50,7 @@ local.properties
 .env
 *.properties.local
 *.yml.local
+*.json
 
 # --- OS Specifics ---
 .DS_Store
