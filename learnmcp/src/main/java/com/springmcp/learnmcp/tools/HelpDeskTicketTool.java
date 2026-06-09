@@ -23,8 +23,8 @@ public class HelpDeskTicketTool {
 		this.helpDeskTicketService = helpDeskTicketService;
 	}
 
-	@Tool(name="createHelpDeskTicket" , description = "This tool will create the help desk support ticket using provided info such as issue and username")
-	public String createTicket(@ToolParam(description = "this is required info to create ticket") ToolContext toolContext, String issue) {
+	@Tool(name="createHelpDeskTicket" , description = "Create the support ticket")
+	public String createTicket(@ToolParam(description = "Details to create support tickets") ToolContext toolContext, String issue) {
 		String username = toolContext.getContext().get("username").toString();
 		logger.info("User ticket rquest processding.....");
 		HelpDeskTicket helpDeskTicket = helpDeskTicketService.createHelpDeshTicket(issue, username);
@@ -32,7 +32,7 @@ public class HelpDeskTicketTool {
 		return "Ticket created with id #" + helpDeskTicket.getId() + " for user " + helpDeskTicket.getUsername();
 	}
 	
-	@Tool(name = "getTicketsByUsername" , description = "This tool will used to get all help desk tickets created by current user")
+	@Tool(name = "getTicketsByUsername" , description = "Fetch the status of ticket based on a given username")
 	public List<HelpDeskTicket> getTicketsByUsername(ToolContext toolContext){
 		String username = (String) toolContext.getContext().get("username");
 		logger.info("Fetching user tickets.....");

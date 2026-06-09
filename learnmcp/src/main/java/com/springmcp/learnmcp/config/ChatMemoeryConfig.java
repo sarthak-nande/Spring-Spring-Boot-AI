@@ -43,7 +43,7 @@ public class ChatMemoeryConfig implements ChatMemory{
 	@Override
 	public List<Message> get(String conversationId) {
 		
-		return chatHistoryRepository.findTop10ByConversationIdOrderByTimestampAsc(conversationId)
+		return chatHistoryRepository.findTopNByConversationIdOrderByTimestampDesc(conversationId, PageRequest.of(0, 10))
 				.stream()
 				.map(doc -> "USER".equals(doc.getMessageType())
 							? new UserMessage(doc.getContent())
