@@ -7,13 +7,6 @@
         "@modelcontextprotocol/server-filesystem",
         "C:\\Users\\91902\\Desktop"
       ]
-    },
-	"spring-ai-mcp": {
-		"command" : "C://Program Files//Java//jdk-17//bin//java.exe",
-		"args": [
-			"-jar",
-			"jar_file_path"
-		]
-	}
+    }
   }
 }
